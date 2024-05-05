@@ -1,7 +1,11 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import Login from "@/views/Login.vue";
-import Home from "@/views/Home.vue";
+import Home from "@/views/home/Home.vue";
 import Container from "@/views/Container.vue";
+import Start from "@/views/run/Start.vue";
+import Plan from "@/views/run/Plan.vue";
+import Report from "@/views/user/Report.vue";
+import Info from "@/views/user/Info.vue";
 
 //导入组件
 
@@ -10,15 +14,31 @@ const routes = [
     {
         path: '/login',
         component:Login,
-        redirect: '/home',
     },
     {
         path: '/',
         component: Container,
+        redirect: '/home',
         children: [
             {
                 path: '/home',
                 component: Home
+            },
+            {
+                path: '/run/start',
+                component: Start
+            },
+            {
+                path: '/run/plan',
+                component: Plan
+            },
+            {
+                path: '/user/report',
+                component: Report
+            },
+            {
+                path: '/user/info',
+                component: Info
             }
         ]
     }

@@ -31,22 +31,22 @@ const handleClose = (key: string, keyPath: string[]) => {
       <span v-if="!isCollapse" class="el-menu-collapse-font">菜单栏</span>
     </div>
     <div class="el-menu-demo">
-      <el-menu default-active="2" :collapse="isCollapse" @open="handleOpen" @close="handleClose">
-        <el-menu-item index="1">
+      <el-menu default-active="2" :collapse="isCollapse" @open="handleOpen" @close="handleClose" router>
+        <el-menu-item index="/home">
           <el-icon>
             <setting />
           </el-icon>
           <template #title>首页</template>
         </el-menu-item>
-        <el-sub-menu index="2">
+        <el-sub-menu>
           <template #title>
             <el-icon>
               <location />
             </el-icon>
             <span>开始跑步</span>
           </template>
-          <el-menu-item index="2-1">跑步打卡</el-menu-item>
-          <el-menu-item index="2-2">跑步计划</el-menu-item>
+          <el-menu-item index="/run/start">跑步打卡</el-menu-item>
+          <el-menu-item index="/run/plan">跑步计划</el-menu-item>
         </el-sub-menu>
         <el-sub-menu index="3">
           <template #title>
@@ -55,8 +55,8 @@ const handleClose = (key: string, keyPath: string[]) => {
             </el-icon>
             <span>个人中心</span>
           </template>
-          <el-menu-item index="3-1">跑步报告</el-menu-item>
-          <el-menu-item index="3-2">个人信息</el-menu-item>
+          <el-menu-item index="/user/report">跑步报告</el-menu-item>
+          <el-menu-item index="/user/info">个人信息</el-menu-item>
         </el-sub-menu>
       </el-menu>
     </div>
