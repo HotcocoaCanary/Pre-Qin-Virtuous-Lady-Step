@@ -7,6 +7,7 @@ import Header from "@/components/container/Header.vue";
   <div class="common-layout">
     <el-container id="container">
       <el-aside id="aside">
+<!--        cebiablan-->
         <Aside></Aside>
       </el-aside>
       <el-container>
