@@ -1,46 +1,38 @@
 -- 创建数据库
-create database Pre_Qin_Virtuous_Lady_Step;
-
--- 使用数据库
-use Pre_Qin_Virtuous_Lady_Step;
+CREATE DATABASE Pre_Qin_Virtuous_Lady_Step;
+USE Pre_Qin_Virtuous_Lady_Step;
 
 -- 用户表
-create table user
+CREATE TABLE User
 (
-    id          int unsigned primary key auto_increment comment 'ID',
-    username    varchar(20) not null unique comment '用户名',
-    password    varchar(32) comment '密码',
-    nickname    varchar(10)  default '' comment '昵称',
-    email       varchar(128) default '' comment '邮箱',
-    user_pic    varchar(128) default '' comment '头像',
-    create_time datetime    not null comment '创建时间',
-    update_time datetime    not null comment '修改时间'
-) comment '用户表';
+    UserID           INT PRIMARY KEY AUTO_INCREMENT,
+    Name             VARCHAR(50)               NOT NULL,
+    Age              INT,
+    Gender           ENUM ('男', '女', '其他') NOT NULL,
+    Email            VARCHAR(100) UNIQUE       NOT NULL,
+    PhoneNumber      VARCHAR(20) UNIQUE        NOT NULL,
+    School           VARCHAR(100),
+    College          VARCHAR(100),
+    Major            VARCHAR(100),
+    Class            VARCHAR(50),
+    RegistrationDate DATE                      NOT NULL,
+    INDEX idx_email (Email),
+    INDEX idx_phone (PhoneNumber)
+) COMMENT ='用户表';
 
--- 分类表
-create table category
+-- 跑步记录表
+CREATE TABLE RunningRecord
 (
-    id             int unsigned primary key auto_increment comment 'ID',
-    category_name  varchar(32)  not null comment '分类名称',
-    category_alias varchar(32)  not null comment '分类别名',
-    create_user    int unsigned not null comment '创建人ID',
-    create_time    datetime     not null comment '创建时间',
-    update_time    datetime     not null comment '修改时间',
-    constraint fk_category_user foreign key (create_user) references user (id) -- 外键约束
-);
-
--- 文章表
-create table article
-(
-    id          int unsigned primary key auto_increment comment 'ID',
-    title       varchar(30)    not null comment '文章标题',
-    content     varchar(10000) not null comment '文章内容',
-    cover_img   varchar(128)   not null comment '文章封面',
-    state       varchar(3) default '草稿' comment '文章状态: 只能是[已发布] 或者 [草稿]',
-    category_id int unsigned comment '文章分类ID',
-    create_user int unsigned   not null comment '创建人ID',
-    create_time datetime       not null comment '创建时间',
-    update_time datetime       not null comment '修改时间',
-    constraint fk_article_category foreign key (category_id) references category (id),-- 外键约束
-    constraint fk_article_user foreign key (create_user) references user (id)         -- 外键约束
-)
+    RecordID             INT PRIMARY KEY AUTO_INCREMENT,
+    UserID               INT,
+    RunningDate          DATE         NOT NULL,
+    Distance             FLOAT        NOT NULL,
+    Duration             TIME         NOT NULL,
+    StartPosition        VARCHAR(255) NOT NULL, -- 调整长度以存储详细地址
+    EndPosition          VARCHAR(255) NOT NULL, -- 调整长度以存储详细地址
+    START_POSITION_POINT POINT,                 -- 添加地理坐标字段
+    END_POSITION_POINT   POINT,                 -- 添加地理坐标字段
+    FOREIGN KEY (UserID) REFERENCES User (UserID),
+    INDEX idx_date (RunningDate),
+    INDEX idx_user (UserID)
+) COMMENT ='跑步记录表';
