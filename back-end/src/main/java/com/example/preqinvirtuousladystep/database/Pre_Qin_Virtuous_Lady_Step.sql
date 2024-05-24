@@ -11,10 +11,6 @@ CREATE TABLE User
     Gender           ENUM ('男', '女', '其他') NOT NULL,
     Email            VARCHAR(100) UNIQUE       NOT NULL,
     PhoneNumber      VARCHAR(20) UNIQUE        NOT NULL,
-    School           VARCHAR(100),
-    College          VARCHAR(100),
-    Major            VARCHAR(100),
-    Class            VARCHAR(50),
     RegistrationDate DATE                      NOT NULL,
     INDEX idx_email (Email),
     INDEX idx_phone (PhoneNumber)
