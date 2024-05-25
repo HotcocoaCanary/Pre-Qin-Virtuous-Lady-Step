@@ -1,35 +1,47 @@
 package com.example.preqinvirtuousladystep.member;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+
+import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
-//lombok  在编译阶段,为实体类自动生成setter  getter toString
-// pom文件中引入依赖   在实体类上添加注解
 @Data
+@Entity
+@Table(name = "User")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "UserID")
+    private Integer userId;
 
+    @Column(name = "Name", nullable = false, length = 50)
     @NotNull
-    private Integer id;//主键ID
-    private String username;//用户名
+    private String name;
 
-    @JsonIgnore//让springmvc把当前对象转换成json字符串的时候,忽略password,最终的json字符串中就没有password这个属性了
-    private String password;//密码
+    @Column(name = "Password", nullable = false, length = 32)
+    private String password;
 
-    @NotEmpty
-    @Pattern(regexp = "^\\S{1,10}$")
-    private String nickname;//昵称
+    @Column(name = "Age")
+    private Integer age;
 
+    @Column(name = "Gender", nullable = false, length = 3)
+    @NotNull
+    private String gender;
+
+    @Column(name = "Email", nullable = false, unique = true, length = 100)
     @NotEmpty
     @Email
-    private String email;//邮箱
-    private String userPic;//用户头像地址
-    private LocalDateTime createTime;//创建时间
-    private LocalDateTime updateTime;//更新时间
+    private String email;
+
+    @Column(name = "PhoneNumber", nullable = false, unique = true, length = 20)
+    @NotEmpty
+    private String phoneNumber;
+
+    @Column(name = "RegistrationDate", nullable = false)
+    private LocalDate registrationDate;
 }
