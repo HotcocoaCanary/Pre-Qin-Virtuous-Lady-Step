@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <h1>登录页面</h1>
+  登录界面
 </template>
 
 <style scoped>
