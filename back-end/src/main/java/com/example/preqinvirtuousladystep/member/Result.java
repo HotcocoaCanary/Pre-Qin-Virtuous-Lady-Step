@@ -32,17 +32,12 @@ public class Result<T> {
     }
 
     // 快速返回操作成功响应结果
-    public static Result success() {
+    public static <E> Result<E> success() {
         return new Result<>(Code.SUCCESS.code, Code.SUCCESS.description, null);
     }
 
     // 快速返回错误响应结果
-    public static Result error(String message) {
+    public static <E> Result<E> error(String message) {
         return new Result<>(Code.FAILURE.code, message, null);
-    }
-
-    // 根据状态码和消息快速返回错误响应结果
-    public static Result error(Code code, String message) {
-        return new Result<>(code.code, message, null);
     }
 }
