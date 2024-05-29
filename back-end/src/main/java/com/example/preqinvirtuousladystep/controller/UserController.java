@@ -51,7 +51,7 @@ public class UserController {
             Map<String, Object> claims = new HashMap<>();
             claims.put("UserID", loginUser.getUserId());
             claims.put("Name", loginUser.getName());
-            String token = JwtUtil.genToken(claims);
+            String token = JwtUtil.getToken(claims);
             return Result.success(token);
         }
         return Result.error("密码错误");
