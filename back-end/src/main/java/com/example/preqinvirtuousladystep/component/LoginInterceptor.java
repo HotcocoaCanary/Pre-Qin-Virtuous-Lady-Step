@@ -14,7 +14,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //令牌验证
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader("OBanyanO-Pre-Qin-Virtuous-Lady-Step");
         //验证token
         try {
             Map<String, Object> claims = JwtUtil.parseToken(token);
