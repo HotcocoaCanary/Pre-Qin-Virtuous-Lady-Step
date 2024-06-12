@@ -1,12 +1,10 @@
-<script setup>
-
-</script>
 
 <template>
 home
 </template>
+<script>
 
-
+</script>
 <style scoped>
 
 </style>

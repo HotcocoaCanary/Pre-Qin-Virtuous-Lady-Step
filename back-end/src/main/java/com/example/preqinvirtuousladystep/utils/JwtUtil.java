@@ -2,13 +2,15 @@ package com.example.preqinvirtuousladystep.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Date;
 import java.util.Map;
 
 public class JwtUtil {
 
-    private static final String KEY = "ObanyanO";
+    @Value("${jwt.key}")
+    private static String KEY;
 
     //接收业务数据,生成token并返回
     public static String getToken(Map<String, Object> claims) {
