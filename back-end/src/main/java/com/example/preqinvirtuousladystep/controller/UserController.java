@@ -4,6 +4,7 @@ import com.example.preqinvirtuousladystep.member.Result;
 import com.example.preqinvirtuousladystep.member.User;
 import com.example.preqinvirtuousladystep.service.UserService;
 import com.example.preqinvirtuousladystep.utils.JwtUtil;
+import com.example.preqinvirtuousladystep.utils.Md5Util;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -21,8 +22,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     @PostMapping("/register")
-    public Result<String> register(@Pattern(regexp = "^\\S{5,16}$") String EmailOrPhoneNumber, @Pattern(regexp = "^\\S{5,16}$") String password) {
+    public Result<String> register(@Pattern(regexp = "^\\S{5,16}$") String EmailOrPhoneNumber,@Pattern(regexp = "^\\S{5,16}$") String password) {
+        // 检查EmailOrPhoneNumber是否为null
+        if (EmailOrPhoneNumber == null || EmailOrPhoneNumber.isEmpty()) {
+            return Result.error("邮箱或手机号不能为空");
+        }
         //查询用户
         User u = userService.findByEmailOrPhoneNumber(EmailOrPhoneNumber);
         if (u == null) {
@@ -46,12 +54,12 @@ public class UserController {
         }
 
         //判断密码是否正确
-        if (password.equals(loginUser.getPassword())) {
+        if (Md5Util.checkPassword(password,loginUser.getPassword())) {
             //登录成功
             Map<String, Object> claims = new HashMap<>();
             claims.put("UserID", loginUser.getUserId());
             claims.put("Name", loginUser.getName());
-            String token = JwtUtil.getToken(claims);
+            String token = jwtUtil.getToken(claims);
             return Result.success(token);
         }
         return Result.error("密码错误");
