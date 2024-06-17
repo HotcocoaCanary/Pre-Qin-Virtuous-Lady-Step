@@ -1,8 +1,8 @@
 <template>
   <div class="user">
     <el-tabs type="border-card">
-      <el-tab-pane>
-        <span slot="label"><i class="el-icon-date">用户信息</i> </span>
+      <el-tab-pane label="用户信息" >
+        <span slot="label"><i class="el-icon-date"></i>用户信息 </span>
        <el-row class="demo-avatar demo-basic">
         <el-col :span="12" style="padding: 10px 10px">
           <div class="demo-basic--circle" >
