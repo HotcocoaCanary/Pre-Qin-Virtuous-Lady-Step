@@ -42,7 +42,7 @@ export default {
         const response = await userInfoService();
         this.userInfo = response.data; // 假设响应的数据结构是 { avatar: 'url', name: 'Title', subTitle: 'Sub title', tag: 'Default' }
       } catch (error) {
-        console.error('Error fetching user info:', error);
+        console.error('Error fetching login info:', error);
       }
     },
     print() {

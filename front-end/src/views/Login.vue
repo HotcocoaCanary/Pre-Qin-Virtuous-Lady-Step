@@ -1,8 +1,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import RegisterForm from "@/components/user/RegisterForm.vue";
-import LoginForm from "@/components/user/LoginForm.vue";
+import RegisterForm from "@/components/login/RegisterForm.vue";
+import LoginForm from "@/components/login/LoginForm.vue";
 
 const isRegister = ref(false);
 

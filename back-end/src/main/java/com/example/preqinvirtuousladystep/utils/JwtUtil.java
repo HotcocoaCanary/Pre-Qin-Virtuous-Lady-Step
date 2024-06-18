@@ -2,6 +2,7 @@ package com.example.preqinvirtuousladystep.utils;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ public class JwtUtil {
     }
 
     // 接收token,验证token,并返回业务数据
-    public Map<String, Object> parseToken(String token) {
+    public Map<String, Object> parseToken(String token) throws JWTDecodeException {
         return JWT.require(Algorithm.HMAC256(KEY)).build().verify(token).getClaim("claims").asMap();
     }
 
