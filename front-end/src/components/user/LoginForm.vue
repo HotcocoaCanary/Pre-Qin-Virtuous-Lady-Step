@@ -4,7 +4,7 @@
       <h1>登录</h1>
     </el-form-item>
     <el-form-item prop="username">
-      <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="loginData.username"></el-input>
+      <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="loginData.EmailOrPhoneNumber"></el-input>
     </el-form-item>
     <el-form-item prop="password">
       <el-input :prefix-icon="Lock" type="password" placeholder="请输入密码" v-model="loginData.password"></el-input>
@@ -31,15 +31,21 @@
 <script setup>
 import { ref } from 'vue';
 import { User, Lock } from '@element-plus/icons-vue';
+import { userLoginService } from '@/api/user.js';
+import {useTokenStore} from '@/stores/token.js'
+import {useRouter} from 'vue-router'
+import { ElMessage } from 'element-plus'
+const router = useRouter()
+const tokenStore = useTokenStore();
 
-const emit = defineEmits(['login', 'toggle']);
+const emit = defineEmits(['toggle']);
 const loginData = ref({
-  username: '',
+  EmailOrPhoneNumber: '',
   password: ''
 });
 
 const rules = {
-  username: [
+  EmailOrPhoneNumber: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
     { min: 5, max: 16, message: '长度为5~16位非空字符', trigger: 'blur' }
   ],
@@ -49,8 +55,13 @@ const rules = {
   ]
 };
 
-const handleLogin = () => {
-  emit('login', loginData.value);
+const handleLogin = async () => {
+  let result =  await userLoginService(loginData.value);
+  ElMessage.success(result.msg ? result.msg : '登录成功')
+  //把得到的token存储到pinia中
+  tokenStore.setToken(result.data)
+  //跳转到首页 路由完成跳转
+  await router.push('/')
 };
 
 const handleToggle = () => {

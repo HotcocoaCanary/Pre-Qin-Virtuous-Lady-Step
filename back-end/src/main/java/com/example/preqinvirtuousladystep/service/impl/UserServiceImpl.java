@@ -37,4 +37,9 @@ public class UserServiceImpl implements UserService {
     public void updatePassword(String newPassword, int UserID) {
         userMapper.updatePassword(newPassword, UserID);
     }
+
+    @Override
+    public User findByUserName(String userName) {
+        return userMapper.findByUserName(userName);
+    }
 }

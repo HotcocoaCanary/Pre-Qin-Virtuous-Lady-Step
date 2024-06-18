@@ -27,10 +27,9 @@ export default {
   data() {
     return {
       userInfo: {
-        avatar: '',
-        name: '',
-        subTitle: '',
-        tag: ''
+        Name: '',
+        Age: '',
+        Gender: ''
       }
     };
   },

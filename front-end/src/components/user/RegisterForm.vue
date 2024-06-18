@@ -1,3 +1,4 @@
+
 <template>
   <el-form ref="form" size="large" autocomplete="off" :model="registerData" :rules="rules">
     <el-form-item>
@@ -28,8 +29,9 @@
 <script setup>
 import { ref } from 'vue';
 import { User, Lock } from '@element-plus/icons-vue';
+import { userRegisterService } from '@/api/user.js';
 
-const emit = defineEmits(['register', 'toggle']);
+const emit = defineEmits(['toggle']);
 const registerData = ref({
   username: '',
   password: '',
@@ -59,8 +61,13 @@ const rules = {
   ]
 };
 
-const handleRegister = () => {
-  emit('register', registerData.value);
+const handleRegister = async () => {
+  try {
+    await userRegisterService(registerData.value);
+    emit('toggle');
+  } catch (error) {
+    console.error('Registration failed:', error);
+  }
 };
 
 const handleToggle = () => {

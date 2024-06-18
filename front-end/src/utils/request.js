@@ -18,13 +18,13 @@ instance.interceptors.request.use(
         const tokenStore = useTokenStore();
         //判断有没有token
         if(tokenStore.token){
-            config.headers.Authorization = tokenStore.token
+            config.headers.OBanyanO_Pre_Qin_Virtuous_Lady_Step = tokenStore.token
         }
         return config;
     },
     (err)=>{
         //请求错误的回调
-        Promise.reject(err)
+        Promise.reject(err).then(r => console.log("请求错误"))
     }
 )
 
@@ -51,7 +51,7 @@ instance.interceptors.response.use(
         //判断响应状态码,如果为401,则证明未登录,提示请登录,并跳转到登录页面
         if(err.response.status===401){
             ElMessage.error('请先登录')
-            router.push('/login')
+            router.push('/login').then(r => console.log('用户未登录'))
         }else{
             ElMessage.error('服务异常')
         }

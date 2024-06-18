@@ -23,4 +23,7 @@ public interface UserMapper {
     // 更新用户密码
     @Update("UPDATE user SET Password = #{md5String} WHERE UserID = #{UserID}")
     void updatePassword(@Param("newPassword") String newPassword, @Param("UserID") Integer UserID);
+
+    @Select("SELECT * FROM user WHERE Name = #{userName}")
+    User findByUserName(@Param("userName") String userName);
 }
