@@ -48,7 +48,7 @@ const handleClose = (key: string, keyPath: string[]) => {
           <el-menu-item index="/run/start">跑步打卡</el-menu-item>
           <el-menu-item index="/run/plan">跑步计划</el-menu-item>
         </el-sub-menu>
-        <el-sub-menu index="3">
+        <el-sub-menu>
           <template #title>
             <el-icon>
               <icon-menu />

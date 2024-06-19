@@ -33,11 +33,11 @@ const routes = [
                 component: Plan
             },
             {
-                path: '/login/report',
+                path: '/user/report',
                 component: Report
             },
             {
-                path: '/login/info',
+                path: '/user/info',
                 component: Info
             }
         ]
