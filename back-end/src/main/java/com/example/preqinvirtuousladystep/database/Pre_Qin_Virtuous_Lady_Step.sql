@@ -18,7 +18,6 @@ CREATE TABLE User
     INDEX idx_phone (PhoneNumber) COMMENT '对电话号码列创建的索引，以便快速查询'
 ) COMMENT ='用户表';
 
-
 -- 创建跑步记录表
 CREATE TABLE RunningRecord
 (

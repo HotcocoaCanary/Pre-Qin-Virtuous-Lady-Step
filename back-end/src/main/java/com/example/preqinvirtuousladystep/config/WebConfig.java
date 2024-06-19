@@ -1,6 +1,6 @@
 package com.example.preqinvirtuousladystep.config;
 
-import com.example.preqinvirtuousladystep.component.LoginInterceptor;
+import com.example.preqinvirtuousladystep.interceptor.LoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -15,6 +15,8 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //登录接口和注册接口不拦截
-        registry.addInterceptor(loginInterceptor).excludePathPatterns("/user/login", "/user/register");
+        registry.addInterceptor(loginInterceptor)
+                .addPathPatterns("/**") // 指定拦截的URL模式
+                .excludePathPatterns("/user/login", "/user/register");
     }
 }

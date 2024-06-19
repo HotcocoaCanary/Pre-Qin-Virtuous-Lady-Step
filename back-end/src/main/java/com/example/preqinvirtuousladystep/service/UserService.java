@@ -14,4 +14,7 @@ public interface UserService {
 
     //更新密码
     void updatePassword(String newPassword, int UserID);
+
+
+    User findByUserName(String userName);
 }

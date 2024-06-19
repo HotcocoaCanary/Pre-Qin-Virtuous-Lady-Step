@@ -1,40 +1,13 @@
+
 <script setup>
-import {ref} from 'vue';
-import {ElMessage} from 'element-plus';
-import {userLoginService, userRegisterService} from '@/api/user.js';
-import {useTokenStore} from '@/stores/token.js';
-import {useRouter} from 'vue-router';
-import RegisterForm from "@/components/user/RegisterForm.vue";
-import LoginForm from "@/components/user/LoginForm.vue";
+import { ref } from 'vue';
+import RegisterForm from "@/components/login/RegisterForm.vue";
+import LoginForm from "@/components/login/LoginForm.vue";
 
-const router = useRouter();
-const tokenStore = useTokenStore();
 const isRegister = ref(false);
-const registerData = ref({
-  username: '',
-  password: '',
-  rePassword: ''
-});
 
-const clearRegisterData = () => {
-  registerData.value = {
-    username: '',
-    password: '',
-    rePassword: ''
-  };
-};
-
-const register = async () => {
-  let result = await userRegisterService(registerData.value);
-  ElMessage.success(result.msg || '注册成功');
-  clearRegisterData();
-};
-
-const login = async () => {
-  let result = await userLoginService(registerData.value);
-  ElMessage.success(result.msg || '登录成功');
-  tokenStore.setToken(result.data);
-  await router.push('/');
+const handleToggle = () => {
+  isRegister.value = !isRegister.value;
 };
 </script>
 
@@ -42,8 +15,8 @@ const login = async () => {
   <el-row class="login-page">
     <el-col :span="12" class="bg"></el-col>
     <el-col :span="6" :offset="3" class="form">
-      <RegisterForm v-if="isRegister" @register="register" @toggle="isRegister = false" />
-      <LoginForm v-else @login="login" @toggle="isRegister = true" />
+      <RegisterForm v-if="isRegister" @toggle="handleToggle" />
+      <LoginForm v-else @toggle="handleToggle" />
     </el-col>
   </el-row>
 </template>
