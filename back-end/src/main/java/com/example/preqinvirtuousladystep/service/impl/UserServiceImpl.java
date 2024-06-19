@@ -19,13 +19,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void register(String EmailOrPhoneNumber, String password) {
+    public boolean register(String EmailOrPhoneNumber, String password) {
         String md5String = Md5Util.getMD5String(password);
         if (EmailOrPhoneNumber.contains("@")) {
             userMapper.addWithEmail(EmailOrPhoneNumber, md5String);
         } else {
             userMapper.addWithPhoneNumber(EmailOrPhoneNumber, md5String);
         }
+        return true;
     }
 
     @Override

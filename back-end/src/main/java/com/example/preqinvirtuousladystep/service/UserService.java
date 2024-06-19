@@ -7,7 +7,7 @@ public interface UserService {
     User findByEmailOrPhoneNumber(String EmailOrPhoneNumber);
 
     //注册
-    void register(String EmailOrPhoneNumber, String password);
+    boolean register(String EmailOrPhoneNumber, String password);
 
     //更新
     void update(User user);
