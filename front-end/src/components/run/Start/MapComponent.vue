@@ -4,11 +4,13 @@ import AMapLoader from "@amap/amap-jsapi-loader";
 
 let map = null;
 let marker = null;
+let circle = null;
+let position = null;
 
 // 定义props，接收经纬度参数
 const props = defineProps({
-  center: {
-    type: Array,
+  location: {
+    type: Object,
     required: true
   }
 });
@@ -27,25 +29,34 @@ onMounted(() => {
           // 设置地图容器id
           viewMode: "3D", // 是否为3D地图模式
           zoom: 11, // 初始化地图级别
-          center: props.center, // 使用props中的center作为地图中心点
+          center: props.location.my, // 使用props中的my作为地图中心点
           mapStyle: "amap://styles/fresh", //设置地图的显示样式
         });
 
         // 创建标记并添加到地图上
         marker = new AMap.Marker({
-          position: props.center, // 标记的位置
+          position: props.location.my, // 标记的位置
           title: '指定位置' // 标记的标题
         });
         map.add(marker);
+
+        // 创建圆并添加到地图上
+        circle = new AMap.Circle({
+          center: props.location.goal, // 圆心位置
+          radius: 1000, // 圆半径
+          fillOpacity: 0.2,
+          strokeWeight: 1
+        });
+        map.add(circle);
       })
       .catch((e) => {
         console.log(e);
       });
 });
-
 onUnmounted(() => {
   map?.destroy();
   marker?.destroy();
+  circle?.destroy();
 });
 </script>
 
@@ -53,12 +64,14 @@ onUnmounted(() => {
   <div class="content">
     <div id="container"></div>
   </div>
-
 </template>
 
 <style scoped>
 #container {
   width: 100%;
-  height: 92vh;
+  height: 80vh;
+}
+.operation-panel {
+  margin-top: 10px;
 }
 </style>

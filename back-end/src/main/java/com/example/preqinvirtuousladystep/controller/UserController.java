@@ -71,6 +71,7 @@ public class UserController {
         Map<String, Object> map = jwtUtil.parseToken(token);
         String userName = (String) map.get("Name");
         User user = userService.findByUserName(userName);
+        user.setPassword("就不告诉你");
         return Result.success(user);
     }
 }

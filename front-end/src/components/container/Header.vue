@@ -2,35 +2,38 @@
   <el-page-header :icon="null">
     <template #content>
       <div class="flex items-center">
-        <el-avatar :size="32" class="mr-3" :src="userInfo.avatar"></el-avatar>
-        <span class="text-large font-600 mr-3"> {{ userInfo.name }} </span>
-        <span class="text-sm mr-2" style=" color: var(--el-text-color-regular)">{{ userInfo.subTitle }}
-        </span>
-        <el-tag type="info" size="small" class="mr-3">{{ userInfo.tag }}</el-tag>
-      </div>
-    </template>
-    <template #extra>
-      <div class="flex items-center">
-        <el-button size="small" @click="print">Print</el-button>
-        <el-button type="primary" size="small" class="ml-2" @click="edit">Edit</el-button>
+        <el-avatar :size="32" class="mr-3" :src="getUserAvatar"></el-avatar>
+        <span class="text-large font-600 mr-3">{{ userInfo.name }}</span>
+        <el-tag>{{ userInfo.password }}</el-tag>
       </div>
     </template>
   </el-page-header>
 </template>
 
 <script>
-
-import {userInfoService} from "@/api/user.js";
+import { userInfoService } from "@/api/user.js";
 
 export default {
   data() {
     return {
+      avatar: {
+        man: 'man.jpg',
+        woman: 'woman.jpg'
+      },
       userInfo: {
-        Name: '',
-        Age: '',
-        Gender: ''
+        name: 'Canary',
+        gender: '男',
+        password:'你好',
+        age: '20',
+        email: 'sksk@sksk',
+        phoneNumber: '15602032933',
       }
     };
+  },
+  computed: {
+    getUserAvatar() {
+      return this.userInfo.gender === '男' ? this.avatar.man : this.avatar.woman;
+    }
   },
   created() {
     this.fetchUserInfo();
@@ -39,23 +42,17 @@ export default {
     async fetchUserInfo() {
       try {
         const response = await userInfoService();
-        this.userInfo = response.data; // 假设响应的数据结构是 { avatar: 'url', name: 'Title', subTitle: 'Sub title', tag: 'Default' }
+        this.userInfo = response.data; // 假设响应的数据结构是 { name: '用户名', gender: '男' 或 '女', tag: '标签', ... }
       } catch (error) {
-        console.error('Error fetching login info:', error);
+        console.error('Error fetching user info:', error);
       }
-    },
-    print() {
-      console.log('Print action');
-      // Add your print logic here
-    },
-    edit() {
-      console.log('Edit action');
-      // Add your edit logic here
     }
   }
 };
 </script>
 
 <style>
-/* Add your custom styles here if needed */
+.flex.items-center {
+  gap: 8px; /* 或者使用 margin-right 来添加边距 */
+}
 </style>
