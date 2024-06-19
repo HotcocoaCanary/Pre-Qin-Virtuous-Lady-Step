@@ -2,7 +2,7 @@
   <div id="start">
     <div class="start">
       <div class="start-left">
-        <el-button type="primary" icon="el-icon-search" circle class="custom-button">开始跑步</el-button>
+        <el-button type="primary" icon="el-icon-search" circle class="custom-button" style="font-size: larger">开始跑步</el-button>
       </div>
       <div class="start-right">地图</div>
     </div>

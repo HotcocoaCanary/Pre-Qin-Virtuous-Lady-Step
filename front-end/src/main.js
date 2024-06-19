@@ -7,7 +7,6 @@ import router from '../src/router/index.js'
 import App from './App.vue'
 import {createPinia} from 'pinia'
 import { createPersistedState } from 'pinia-persistedstate-plugin'
-
 const app = createApp(App);
 const pinia = createPinia();
 const persist = createPersistedState();
