@@ -17,11 +17,11 @@ public interface UserMapper {
     void addWithPhoneNumber(String phoneNumber, String password);
 
     // 更新用户信息
-    @Update("UPDATE user SET Name = #{Name}, Password = #{Password}, Age = #{Age}, Gender = #{Gender}, " + "Email = #{Email}, PhoneNumber = #{PhoneNumber} WHERE UserID = #{UserID}")
+    @Update("UPDATE user SET Name = #{name}, Age = #{age}, Gender = #{gender}, Email = #{email}, PhoneNumber = #{phoneNumber}, RegistrationDate = now() WHERE UserID = #{userId}")
     void update(User user);
 
     // 更新用户密码
-    @Update("UPDATE user SET Password = #{md5String} WHERE UserID = #{UserID}")
+    @Update("UPDATE user SET Password = #{newPassword}, RegistrationDate = now() WHERE UserID = #{UserID}")
     void updatePassword(@Param("newPassword") String newPassword, @Param("UserID") Integer UserID);
 
     @Select("SELECT * FROM user WHERE Name = #{userName}")
