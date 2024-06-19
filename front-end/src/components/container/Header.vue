@@ -4,8 +4,7 @@
       <div class="flex items-center">
         <el-avatar :size="32" class="mr-3" :src="userInfo.avatar"></el-avatar>
         <span class="text-large font-600 mr-3"> {{ userInfo.name }} </span>
-        <span class="text-sm mr-2" style="color: var(--el-text-color-regular)">
-          {{ userInfo.subTitle }}
+        <span class="text-sm mr-2" style=" color: var(--el-text-color-regular)">{{ userInfo.subTitle }}
         </span>
         <el-tag type="info" size="small" class="mr-3">{{ userInfo.tag }}</el-tag>
       </div>

@@ -41,14 +41,14 @@ import Header from "@/components/container/Header.vue";
 }
 
 #header {
-  background-color: darksalmon;
+  background-color: #14a6e6;
 }
 
 #main {
-  background-color: darkgreen;
+  background-color: #f1f8f1;
 }
 
 #footer {
-  background-color: darkgoldenrod;
+  background-color: #14a6e6;
 }
 </style>
