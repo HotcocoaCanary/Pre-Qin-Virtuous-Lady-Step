@@ -1,19 +1,44 @@
+<template>
+  <div class="content">
+    <div id="container"></div>
+  </div>
+</template>
+
 <script setup>
-import { onMounted, onUnmounted, ref } from "vue";
-import AMapLoader from "@amap/amap-jsapi-loader";
+import {onMounted, onUnmounted, ref} from 'vue';
+import AMapLoader from '@amap/amap-jsapi-loader';
+import {runClockService} from "@/api/run.js";
 
 let map = null;
 let marker = null;
 let circle = null;
-let position = null;
+let infoWindow = null;
 
 // 定义props，接收经纬度参数
 const props = defineProps({
   location: {
     type: Object,
     required: true
+  },
+  startTime:{
+    type: Date(),
   }
 });
+props.startTime=new Date();
+
+// 定义信息窗口内容
+const infoWindowContent = `
+  <div class="custom-infowindow" style="background-color: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); font-family: 'Arial', sans-serif;">
+  <label style="font-weight: bold; margin-bottom: 10px; display: block;">打卡</label>
+  <div class="input-item" style="margin-bottom: 10px;">
+    <div class="input-item-prepend" style="margin-right: 5px;">
+      <span class="input-item-text" style="font-weight: bold;">是否在圈内</span>
+    </div>
+    <input id="lnglat" type="text" readonly style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; font-size: 14px;" />
+  </div>
+  <input id="checkIn" type="button" class="btn" value="打卡签到" style="background-color: #007bff; color: white; border: none; border-radius: 4px; padding: 5px 10px; cursor: pointer; font-size: 14px;" />
+</div>
+`;
 
 onMounted(() => {
   window._AMapSecurityConfig = {
@@ -42,17 +67,89 @@ onMounted(() => {
 
         // 创建圆并添加到地图上
         circle = new AMap.Circle({
-          center: props.location.goal, // 圆心位置
-          radius: 1000, // 圆半径
+          center: props.location.goal,
+          radius: 1000,
           fillOpacity: 0.2,
           strokeWeight: 1
         });
         map.add(circle);
+
+        // 创建信息窗口
+        infoWindow = new AMap.InfoWindow({
+          content: infoWindowContent,
+          offset: new AMap.Pixel(0, -30)
+        });
+
+        // 打卡签到事件
+        const checkIn = () => {
+          AMap.plugin('AMap.Geolocation', () => {
+            const geolocation = new AMap.Geolocation({
+              enableHighAccuracy: true, // 是否使用高精度定位，默认:true
+              timeout: 10000, // 超过10秒后停止定位，默认：5s
+              buttonPosition: 'RB', // 定位按钮的停靠位置
+              buttonOffset: new AMap.Pixel(10, 20), // 定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+              zoomToAccuracy: true, // 定位成功后是否自动调整地图视野到定位点
+            });
+
+            map.add(geolocation);
+            geolocation.getCurrentPosition((status, result) => {
+              if (status === 'complete') {
+                onComplete(result);
+              } else {
+                onError(result);
+              }
+            });
+          });
+
+          const onComplete = async (data) => {
+            const distance = AMap.GeometryUtil.distance(data.position, circle.getCenter());
+            const isInside = distance <= circle.getRadius();
+            const lnglatInput = document.getElementById('lnglat');
+            lnglatInput.value = isInside ? '是' : '否';
+            if (isInside) {
+              geocoder.getAddress(props.location.my, (status, result) => {
+                if (status === 'complete' && result.regeocode) {
+                  const startAddress = result.regeocode.formattedAddress;
+                  geocoder.getAddress(data.position, (status, result) => {
+                    if (status === 'complete' && result.regecode) {
+                      const endAddress = result.regeocode.formattedAddress;
+                      const duration = (new Date() - props.startTime) / 1000; // 用时，单位秒
+
+                      const LocationData = {
+                        startAddress: startAddress,
+                        endAddress: endAddress,
+                        distance: distance,
+                        duration: duration
+                      };
+
+                      // 发送LocationData到服务器或进行其他处理
+                      console.log(LocationData);
+                      // 这里可以调用runClockService方法将数据发送到服务器
+                      runClockService(LocationData);
+                    }
+                  });
+                }
+              });
+            }
+          };
+
+          const onError = (data) => {
+            console.log(data);
+          };
+        };
+
+        // 绑定打卡签到事件
+        marker.on('click', () => {
+          infoWindow.open(map, marker.getPosition());
+          document.getElementById('checkIn').addEventListener('click', checkIn);
+        });
       })
       .catch((e) => {
         console.log(e);
       });
 });
+
+
 onUnmounted(() => {
   map?.destroy();
   marker?.destroy();
@@ -60,18 +157,12 @@ onUnmounted(() => {
 });
 </script>
 
-<template>
-  <div class="content">
-    <div id="container"></div>
-  </div>
-</template>
 
 <style scoped>
 #container {
+  padding: 0;
+  margin: 0;
   width: 100%;
-  height: 80vh;
-}
-.operation-panel {
-  margin-top: 10px;
+  height: 800px;
 }
 </style>

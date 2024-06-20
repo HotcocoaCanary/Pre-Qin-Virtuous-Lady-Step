@@ -15,14 +15,21 @@ public class JwtUtil {
     @Value("${jwt.key}")
     private String KEY;
 
+    private String token;
+
     // 接收业务数据,生成token并返回
     public String getToken(Map<String, Object> claims) {
-        return JWT.create().withClaim("claims", claims).withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60)).sign(Algorithm.HMAC256(KEY));
+        token = JWT.create().withClaim("claims", claims).withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60)).sign(Algorithm.HMAC256(KEY));
+        return token;
     }
 
     // 接收token,验证token,并返回业务数据
     public Map<String, Object> parseToken(String token) throws JWTDecodeException {
         return JWT.require(Algorithm.HMAC256(KEY)).build().verify(token).getClaim("claims").asMap();
+    }
+
+    public String getThisToken(){
+        return token;
     }
 
 }

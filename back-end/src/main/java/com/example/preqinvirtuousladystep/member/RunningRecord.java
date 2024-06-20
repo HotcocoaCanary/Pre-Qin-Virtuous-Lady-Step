@@ -23,10 +23,10 @@ public class RunningRecord {
     private LocalDate runningDate;
 
     @Column(name = "Distance")
-    private BigDecimal distance;
+    private String distance;
 
     @Column(name = "Duration")
-    private LocalTime duration;
+    private String duration;
 
     @Column(name = "StartPosition")
     private String startPosition;

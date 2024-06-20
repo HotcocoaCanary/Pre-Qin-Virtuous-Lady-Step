@@ -11,15 +11,21 @@
 
 <script>
 import { ref } from "vue";
+import Image1 from "@/assets/img/slideshow/Image1.jpg";
+import Image2 from "@/assets/img/slideshow/Image2.jpg";
+import Image3 from "@/assets/img/slideshow/Image3.jpg";
+import Image4 from "@/assets/img/slideshow/Image4.jpg";
+import Image5 from "@/assets/img/slideshow/Image5.jpg";
 
 export default {
   setup() {
     const value = ref(new Date());
     const images = ref([
-      {src: 'assets/img/kk/Image1.jpg', alt: 'Image 1'},
-      {src: 'kk/Image2.jpg', alt: 'Image 2'},
-      {src: 'kk/Image3.jpg', alt: 'Image 3'},
-      // 添加更多图片对象
+      {src: Image1, alt: 'Image1'},
+      {src: Image2, alt: 'Image2'},
+      {src: Image3, alt: 'Image3'},
+      {src: Image4, alt: 'Image4'},
+      {src: Image5, alt: 'Image5'},
     ]);
 
     return {

@@ -1,7 +1,11 @@
 package com.example.preqinvirtuousladystep.service;
 
-import org.springframework.stereotype.Service;
+import com.example.preqinvirtuousladystep.member.RunningRecord;
 
-@Service
+import java.util.List;
+
 public interface RunningRecordService {
+    void saveRunningRecord(RunningRecord runningRecord);
+
+    List<RunningRecord> getRunningRecord(Integer userId);
 }

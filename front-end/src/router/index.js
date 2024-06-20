@@ -18,10 +18,10 @@ const routes = [
     {
         path: '/',
         component: Container,
-        redirect: '/kk',
+        redirect: '/slideshow',
         children: [
             {
-                path: '/kk',
+                path: '/slideshow',
                 component: Home
             },
             {

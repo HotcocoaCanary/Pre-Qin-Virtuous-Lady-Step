@@ -23,8 +23,6 @@ public class UserController {
     @Autowired
     private JwtUtil jwtUtil;
 
-    private String token;
-
     @PostMapping("/register")
     public Result<String> register(String EmailOrPhoneNumber,String password) {
         // 检查EmailOrPhoneNumber是否为null
@@ -59,8 +57,7 @@ public class UserController {
             Map<String, Object> claims = new HashMap<>();
             claims.put("UserID", loginUser.getUserId());
             claims.put("Name", loginUser.getName());
-            token = jwtUtil.getToken(claims);
-            return Result.success(token);
+            return Result.success(jwtUtil.getToken(claims));
         }
         return Result.error("密码错误");
     }
@@ -68,10 +65,10 @@ public class UserController {
     @GetMapping("/userInfo")
     public Result<User> userInfo() {
         //根据用户名查询用户
-        Map<String, Object> map = jwtUtil.parseToken(token);
+        Map<String, Object> map = jwtUtil.parseToken(jwtUtil.getThisToken());
         String userName = (String) map.get("Name");
         User user = userService.findByUserName(userName);
-        user.setPassword("就不告诉你");
+        user.setPassword("热爱使我们进步");
         return Result.success(user);
     }
 }

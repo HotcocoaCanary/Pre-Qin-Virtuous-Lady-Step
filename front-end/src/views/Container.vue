@@ -40,15 +40,14 @@ import Header from "@/components/container/Header.vue";
   flex: 0 0 auto; /* 关闭flex grow和shrink，基于内容宽度 */
 }
 
-#header {
-  background-color: #14a6e6;
+#header{
+  background-color: #BEAEA1;
 }
-
 #main {
-  background-color: #f1f8f1;
+  background-color: darkgray;
 }
 
 #footer {
-  background-color: #14a6e6;
+  background-color: #BEAEA1;
 }
 </style>
