@@ -5,7 +5,7 @@
       <h1>注册</h1>
     </el-form-item>
     <el-form-item prop="username">
-      <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="registerData.username"></el-input>
+      <el-input :prefix-icon="User" placeholder="请输入用户名" v-model="registerData.EmailOrPhoneNumber"></el-input>
     </el-form-item>
     <el-form-item prop="password">
       <el-input :prefix-icon="Lock" type="password" placeholder="请输入密码" v-model="registerData.password"></el-input>
@@ -33,13 +33,13 @@ import { userRegisterService } from '@/api/user.js';
 
 const emit = defineEmits(['toggle']);
 const registerData = ref({
-  username: '',
+  EmailOrPhoneNumber: '',
   password: '',
   rePassword: ''
 });
 
 const rules = {
-  username: [
+  EmailOrPhoneNumber: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
     { min: 5, max: 16, message: '长度为5~16位非空字符', trigger: 'blur' }
   ],

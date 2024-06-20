@@ -1,6 +1,7 @@
 <script setup>
 import Aside from "@/components/container/Aside.vue";
 import Header from "@/components/container/Header.vue";
+import Footer from "@/components/container/Footer.vue";
 </script>
 
 <template>
@@ -16,7 +17,9 @@ import Header from "@/components/container/Header.vue";
         <el-main id="main">
           <router-view></router-view>
         </el-main>
-        <el-footer id="footer">Footer</el-footer>
+        <el-footer id="footer">
+          <Footer></Footer>
+        </el-footer>
       </el-container>
     </el-container>
   </div>
